@@ -25,23 +25,25 @@
         <link rel="stylesheet" type="text/css" href="css/estilo.css" >
     </head>
     <body>
-      
+
         <input  id="archivo "type="file" onchange='processFiles(this.files)' >
         <div id="cssmenu" >
             <ul id="tabla">
                 <li class="noactivo active">
                     <a id="1" class="proyectos" href="#" >1</a>
                 </li>
-             
+
             </ul>
 
         </div>
         <div id="container">
-            <textarea id="textarea_1" class="textarea" name="content" cols="80" rows="1"></textarea>
+            <textarea id="textarea_1" onclick="activar()" class="textarea" name="content" cols="80" rows="1"></textarea>
         </div>
 
         <button id="enviar">Enviar</button>
         <button id="breakpoint">breakpoint</button>
-        <button id="generar">generar</button>
+       
+        <button id="mover">Mover Archivos</button>
+        <button id="run">run</button>
     </body>
 </html>

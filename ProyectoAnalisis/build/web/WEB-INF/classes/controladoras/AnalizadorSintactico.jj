@@ -1,0 +1,84 @@
+
+options {
+STATIC = false ;
+}
+PARSER_BEGIN(AnalizadorSintactico)
+package controladoras;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class AnalizadorSintactico{
+GenerarJava generar= new GenerarJava();
+  public static void main(String[] args) {
+
+       
+        try {
+            AnalizadorSintactico parser = new AnalizadorSintactico(new FileReader(args[0]));
+            try {
+                parser.Start();
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalizadorSintactico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AnalizadorSintactico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+}
+PARSER_END(AnalizadorSintactico)
+
+
+SKIP : 
+{ 
+	" "|"\n" | "\r" | "\r\n" | "\t"
+}
+
+TOKEN : { < PLUS : "+" > }
+TOKEN : { < NUMBER : (["0"-"9"])+ > }
+TOKEN:
+{
+	  <BEGIN: "begin"> 
+	| <END: "end"> 
+	| <IF: "if"> 
+	| <THEN: "then"> 
+	| <ELSE: "else"> 
+	| <BOLEANO: "true"|"false" > 
+	| <NOT:"not" > 
+	| <OPERADORR:"<="|">="|"<"|">"|"="|"<>" > 
+	| <OPERADORL :"and"|"or" > 
+	| <WHILE:"while" > 
+	| <PARENTESISABIERTO:"(" > 
+	| <DO:"do" > 
+	| <PARENTESISCERRADO:")" > 
+	| <ASIGNACION:"<-" > 
+	| <TO:"to" > 
+	| <IDENTIFICADOR : ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9","_"])*>
+	| <DOUBLECOMMA: "\""> 
+	| <CADENA : <DOUBLECOMMA>["a"-"z","A"-"Z","0"-"9"," "](["a"-"z","A"-"Z","0"-"9"," ",":",";","."])*<DOUBLECOMMA>>
+	|<OPERADOR : "+"|"-"|"*"|"/">
+}
+void Start() :
+{}
+{
+<BEGIN>
+ E()
+
+<END>
+}
+
+void E() :
+{}
+{
+    (VARIABLE())*
+}
+void VARIABLE() :
+{Token n;String []valores= new String[2];}
+{
+    n=<IDENTIFICADOR><ASIGNACION>valores=VALOR(){generar.recibir(valores[1]+" "+n.image+" = "+valores[0]+";"); generar.insertarVariable(valores[1], n.image); generar.escribir();}
+}
+String [] VALOR() :
+{Token n;String [] valores = new String[2];}
+{
+    n=<IDENTIFICADOR>{valores[0]=n.image ; valores[1]=generar.buscarVariable(n.image);return valores;}| n=<NUMBER>{valores[0]=n.image ; valores[1]="int" ;return valores;}|  n=<CADENA>{valores[0]=n.image ; valores[1]="String" ;return valores;}
+}

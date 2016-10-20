@@ -63,7 +63,7 @@ public class Controladora extends HttpServlet {
 //                }
 //            }
 
-            String[] archivoPrueba = {"C:\\Users\\Jorge Alejandro\\Documents\\NetBeansProjects\\Proyecto-Analisis-Java-web\\ProyectoAnalisis\\src\\java\\controladoras\\code.txt"};
+            String[] archivoPrueba = {"D:\\Proyectos\\Proyecto-Analisis-Java-web\\ProyectoAnalisis\\src\\java\\controladoras\\code.txt"};
             //C:\Users\Jorge Alejandro\Documents\NetBeansProjects\ProyectoAnalisisPrueba\src\java\controladoras\texto.txt
             try {
                 AnalizadorSintactico.main(archivoPrueba);
