@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 public class Compilador {
 
     Class clase;
+
+    public Compilador() {
+    }
     
     public void compilar()
     {
@@ -25,6 +28,8 @@ public class Compilador {
             Object objeto=clase.newInstance();
             Method ejecutarTarea = clase.getMethod("principal", null);
             ejecutarTarea.invoke(objeto, null);
+            Method ejecutarTarea1 = clase.getMethod("mostrar", null);
+            ejecutarTarea1.invoke(objeto, null);
         
         } catch (ClassNotFoundException ex) {
             System.out.println("Error al obtener la clase");
@@ -42,5 +47,8 @@ public class Compilador {
             System.out.println("Error al invocar");
         }
     }
-    
+    public static void main(String[] args) {
+        Compilador oe= new Compilador();
+        oe.compilar();
+    } 
 }
